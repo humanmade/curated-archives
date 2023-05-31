@@ -1,0 +1,11 @@
+{
+    "name": "humanmade/curated-archives",
+    "description": "Block Editor editable pages for term archives",
+    "type": "wordpress-plugin",
+    "license": "GPL-3.0-or-later",
+    "authors": [
+        {
+            "name": "Human Made"
+        }
+    ]
+}
