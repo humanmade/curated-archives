@@ -46,15 +46,26 @@ function get_curated_archive( ?int $term_taxonomy_id = null ) : ?WP_Post {
  * @return void
  */
 function the_curated_archive( ?int $term_taxonomy_id = null ) : void {
-	$post = get_curated_archive( $term_taxonomy_id );
+	global $post;
 
-	if ( ! $post ) {
+	$archive_post = get_curated_archive( $term_taxonomy_id );
+
+	if ( ! $archive_post ) {
 		return;
 	}
 
 	// Check status.
-	if ( $post->post_status !== 'publish' && ! is_preview() ) {
+	if ( $archive_post->post_status !== 'publish' && ! is_preview() ) {
 		return;
+	}
+
+	$post = $archive_post;
+
+	if ( is_preview() ) {
+		$autosave = wp_get_post_autosave( $post->ID );
+		if ( $autosave ) {
+			$post = $autosave;
+		}
 	}
 
 	setup_postdata( $post );
