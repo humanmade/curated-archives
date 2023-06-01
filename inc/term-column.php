@@ -18,6 +18,10 @@ function bootstrap() : void {
  * @return void
  */
 function add_columns() {
+	if ( ! current_user_can( 'edit_pages' ) ) {
+		return;
+	}
+
 	$taxes = get_taxonomies( [ 'public' => true ] );
 
 	/**
@@ -56,18 +60,22 @@ function custom_column_content( $value, $column_name, $tax_id ) {
 		$post_status = get_post_status( $curated_archive_id );
 
 		if ( ! $curated_archive_id || null === $post_status || 'trash' === $post_status ) {
-			printf(
-				'<a href="" class="term-id-%s js-make-curated-archive button">%s</a>',
-				esc_attr( $tax_id ),
-				esc_html__( 'Add new', 'hm-curated-archive' )
-			);
+			if ( current_user_can( 'edit_pages' ) ) {
+				printf(
+					'<a href="" class="term-id-%s js-make-curated-archive button">%s</a>',
+					esc_attr( $tax_id ),
+					esc_html__( 'Add new', 'hm-curated-archive' )
+				);
+			}
 		} elseif ( 'draft' === $post_status ) {
-			printf(
-				'<a href="/wp-admin/post.php?post=%s&action=edit" class="button button-primary">%s</a>',
-				esc_attr( $curated_archive_id ),
-				esc_html__( 'Edit Draft', 'hm-curated-archive' )
-			);
-		} else {
+			if ( current_user_can( 'edit_page', $curated_archive_id ) ) {
+				printf(
+					'<a href="/wp-admin/post.php?post=%s&action=edit" class="button button-primary">%s</a>',
+					esc_attr( $curated_archive_id ),
+					esc_html__( 'Edit Draft', 'hm-curated-archive' )
+				);
+			}
+		} elseif ( current_user_can( 'edit_page', $curated_archive_id ) ) {
 			printf(
 				'<a href="/wp-admin/post.php?post=%s&action=edit" class="button button-primary">%s</a>',
 				esc_attr( $curated_archive_id ),

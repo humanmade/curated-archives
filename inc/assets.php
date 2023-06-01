@@ -41,6 +41,10 @@ function enqueue_assets_frontend() : void {
  * Enqueue scripts for the WP admin bar.
  */
 function enqueue_admin_bar_assets() : void {
+	if ( ! current_user_can( 'edit_pages' ) ) {
+		return;
+	}
+
 	wp_enqueue_script(
 		'curated-archives',
 		plugins_url( 'src/index.js', Curated_Archives\FILE ),
