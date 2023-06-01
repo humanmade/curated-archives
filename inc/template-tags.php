@@ -12,7 +12,7 @@
 function has_curated_archive( ?int $term_taxonomy_id = null ) : bool {
 	$term = $term_taxonomy_id ? get_term_by( 'term_taxonomy_id', $term_taxonomy_id ) : get_queried_object();
 
-	if ( ! property_exists( $term, 'term_id' ) ) {
+	if ( empty( $term ) || ! is_object( $term ) || ! property_exists( $term, 'term_id' ) ) {
 		return false;
 	}
 
@@ -30,7 +30,7 @@ function has_curated_archive( ?int $term_taxonomy_id = null ) : bool {
 function get_curated_archive( ?int $term_taxonomy_id = null ) : ?WP_Post {
 	$term = $term_taxonomy_id ? get_term_by( 'term_taxonomy_id', $term_taxonomy_id ) : get_queried_object();
 
-	if ( ! property_exists( $term, 'term_id' ) ) {
+	if ( empty( $term ) || ! is_object( $term ) || ! property_exists( $term, 'term_id' ) ) {
 		return null;
 	}
 
@@ -49,6 +49,11 @@ function the_curated_archive( ?int $term_taxonomy_id = null ) : void {
 	$post = get_curated_archive( $term_taxonomy_id );
 
 	if ( ! $post ) {
+		return;
+	}
+
+	// Check status.
+	if ( $post->post_status !== 'publish' && ! is_preview() ) {
 		return;
 	}
 

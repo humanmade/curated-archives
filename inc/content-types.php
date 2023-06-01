@@ -31,6 +31,8 @@ function register_curated_archives_cpt(): void {
 	register_post_type(
 		CURATED_ARCHIVE_CPT_SLUG,
 		[
+			'label' => __( 'Curated Archives', 'hm-curated-archives' ),
+			'singular_label' => __( 'Curated Archives', 'hm-curated-archives' ),
 			'capabilities' => [
 				'create_posts' => 'do_not_allow',
 			],

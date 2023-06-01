@@ -31,6 +31,12 @@ function redirect_curated_archive_posts(): void {
 		return;
 	}
 
-	wp_safe_redirect( get_term_link( (int) $post_term_meta ) );
+	$link = get_term_link( (int) $post_term_meta );
+
+	if ( is_preview() ) {
+		$link = add_query_arg( [ 'preview' => 'true' ], $link );
+	}
+
+	wp_safe_redirect( $link );
 	exit;
 }

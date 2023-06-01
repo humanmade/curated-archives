@@ -19,28 +19,33 @@ function bootstrap() : void {
  * @return string The path of the template to include.
  */
 function filter_template_include( string $template ) : string {
-    $queried_object = get_queried_object();
+	$queried_object = get_queried_object();
 
-    if ( ! property_exists( $queried_object, 'term_id' ) ) {
-        return $template;
-    }
+	if ( empty( $queried_object ) || ! is_object( $queried_object ) || ! property_exists( $queried_object, 'term_id' ) ) {
+		return $template;
+	}
 
-    $curated_archive_id = get_term_meta( $queried_object->term_id, 'curated_archive_id', true );
+	$curated_archive_id = get_term_meta( $queried_object->term_id, 'curated_archive_id', true );
 
-    if ( empty( $curated_archive_id ) ) {
-        return $template;
-    }
+	if ( empty( $curated_archive_id ) ) {
+		return $template;
+	}
 
-    $archive_template = locate_template( [
-        "curated-archive-{$queried_object->slug}.php",
-        "curated-archive-{$queried_object->term_id}.php",
-        "curated-archive-{$queried_object->taxonomy}.php",
-        'curated-archive.php',
-    ] );
+	// Don't use template for unpublished archives unless previewing.
+	if ( get_post_status( $curated_archive_id ) !== 'publish' && ! is_preview() ) {
+		return $template;
+	}
 
-    if ( $archive_template ) {
-        return $archive_template;
-    }
+	$archive_template = locate_template( [
+		"curated-archive-{$queried_object->slug}.php",
+		"curated-archive-{$queried_object->term_id}.php",
+		"curated-archive-{$queried_object->taxonomy}.php",
+		'curated-archive.php',
+	] );
+
+	if ( $archive_template ) {
+		return $archive_template;
+	}
 
 	return $template;
 }

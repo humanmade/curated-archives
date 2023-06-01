@@ -5,7 +5,7 @@
 /**
  * Initialize
  */
-const initialize = () => {
+function initialize() {
 	let makeButtons = document.querySelectorAll( '.js-make-curated-archive' );
 
 	if ( makeButtons.length === 0 ) {
@@ -16,7 +16,7 @@ const initialize = () => {
 		makeButtons = makeButtons[0].querySelector( '.ab-item' );
 		clickEvent( makeButtons, true );
 	} else {
-		makeButtons.forEach( makeButton => {
+		makeButtons.forEach( function ( makeButton ) {
 			clickEvent( makeButton );
 		} );
 	}
@@ -25,11 +25,11 @@ const initialize = () => {
 /**
  * Handle click of different Make Curated Archive Buttons - whether direct click or parent node.
  *
- * @param {object} makeButton - The Node in which to run the click on
- * @param {boolean} parent - Whehther or not to select the parent of the original node
+ * @param {object} makeButton The Node in which to run the click on
+ * @param {boolean} parent Whehther or not to select the parent of the original node
  */
-const clickEvent = ( makeButton, parent = false ) => {
-	makeButton.addEventListener( 'click', ev => {
+function clickEvent( makeButton, parent = false ) {
+	makeButton.addEventListener( 'click', function ( ev ) {
 		ev.preventDefault();
 
 		let elClassName = ev.target.classList[0];
@@ -44,9 +44,9 @@ const clickEvent = ( makeButton, parent = false ) => {
 /**
  * AJAX call to Create Curated Archive Post
  *
- * @param {boolean} termId - ID of TERM
+ * @param {boolean} termId ID of TERM
  */
-const createCuratedArchivePost = termId => {
+function createCuratedArchivePost( termId ) {
 	const data = new FormData();
 	data.append( 'action', 'create_curated_archive_post' );
 	data.append( 'nonce', window.curated_archive_vars.ajax_nonce_curated_post );
@@ -57,16 +57,18 @@ const createCuratedArchivePost = termId => {
 		credentials: 'same-origin',
 		body: data,
 	} )
-		.then( response => response.json() )
-		.then( data => {
+		.then( function ( response ) {
+			return response.json();
+		} )
+		.then( function ( data ) {
 			window.location.href = data;
 		} )
-		.catch( error => {
+		.catch( function ( error ) {
 			alert( 'Sorry, there was a problem creating the curated archive. The error is: ' + error );
 		} );
 };
 
 
-window.addEventListener( 'DOMContentLoaded', () => {
+window.addEventListener( 'DOMContentLoaded', function () {
 	initialize();
 } );
