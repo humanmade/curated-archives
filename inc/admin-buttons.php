@@ -18,7 +18,7 @@ function bootstrap() : void {
  * @param object $wp_admin_bar - Instance of WP Admin Bar
  */
 function curated_archive_admin_bar_link( $wp_admin_bar ) {
-	if ( is_admin() || ! is_archive() || ! current_user_can( 'edit_terms' ) ) {
+	if ( is_admin() || ! is_archive() || ! current_user_can( 'edit_pages' ) ) {
 		return;
 	}
 
