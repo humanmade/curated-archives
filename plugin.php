@@ -3,7 +3,7 @@
  * Plugin Name: Curated Archives
  * Plugin URI: https://github.com/humanmade/curated-archives
  * Description: Block Editor pages for your term archives
- * Version: 1.1.0
+ * Version: 1.1.4
  * Author: Human Made
  */
 

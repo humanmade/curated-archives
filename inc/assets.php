@@ -49,7 +49,7 @@ function enqueue_admin_bar_assets() : void {
 		'curated-archives',
 		plugins_url( 'src/index.js', Curated_Archives\FILE ),
 		[],
-		'1.1.1',
+		'1.1.4',
 		true
 	);
 
