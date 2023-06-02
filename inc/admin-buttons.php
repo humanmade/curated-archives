@@ -35,7 +35,7 @@ function curated_archive_admin_bar_link( $wp_admin_bar ) {
 		$wp_admin_bar->add_node( [
 			'id' => 'make-curated-archive',
 			'title' => __( 'Make Curated Archive', 'hm-curated-archives' ),
-			'href' => '',
+			'href' => '#',
 			'meta' => [
 				'class' => 'term-id-' . $term_id . ' js-type-admin-bar js-make-curated-archive',
 			],
@@ -47,7 +47,7 @@ function curated_archive_admin_bar_link( $wp_admin_bar ) {
 		$wp_admin_bar->add_node( [
 			'id' => 'edit-curated-archive',
 			'title' => __( 'Edit Draft Curated Archive', 'hm-curated-archives' ),
-			'href' => '/wp-admin/post.php?post=' . $term_curated_archive . '&action=edit',
+			'href' => admin_url( 'post.php?post=' . $term_curated_archive . '&action=edit' ),
 		] );
 
 	} else {
@@ -56,7 +56,7 @@ function curated_archive_admin_bar_link( $wp_admin_bar ) {
 		$wp_admin_bar->add_node( [
 			'id' => 'edit-curated-archive',
 			'title' => __( 'Edit Curated Archive', 'hm-curated-archives' ),
-			'href' => '/wp-admin/post.php?post=' . $term_curated_archive . '&action=edit',
+			'href' => admin_url( 'post.php?post=' . $term_curated_archive . '&action=edit' ),
 		] );
 
 	}

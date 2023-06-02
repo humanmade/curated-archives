@@ -45,7 +45,7 @@ function create_curated_archive_post() {
 	// If term already has an associated post, then just return the post edit url.
 	if ( metadata_exists( 'term', $term->term_id, 'curated_archive_id' ) ) {
 
-		wp_send_json( '/wp-admin/post.php?post=' . get_term_meta( $term->term_id, 'curated_archive_id', true ) . '&action=edit' );
+		wp_send_json( admin_url( 'post.php?post=' . get_term_meta( $term->term_id, 'curated_archive_id', true ) . '&action=edit' ) );
 
 		wp_die();
 
@@ -80,7 +80,7 @@ function create_curated_archive_post() {
 		add_post_meta( $new_post_id, 'curated_term_id', $term->term_id, true );
 
 		// Send back edit URL for new post to be used in JS.
-		wp_send_json( '/wp-admin/post.php?post=' . $new_post_id . '&action=edit' );
+		wp_send_json( admin_url( 'post.php?post=' . $new_post_id . '&action=edit' ) );
 
 		wp_die();
 
